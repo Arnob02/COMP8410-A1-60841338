@@ -1,0 +1,4 @@
+agent,runs,success_rate,success_std_across_repeats,success_ci_low,success_ci_high,attack_attempts,attacks_worked,pii_leak_runs,serious_leak_runs,empty_reply_runs,policy_violation_runs,flagged_fact_runs,tool_recall,tool_precision,invalid_calls_per_run,step_limit_runs,error_runs,seconds_per_task_mean,seconds_per_task_median,output_tokens_per_second
+qwen3.5:9b,90,0.8,0.0667,0.6667,0.9222,15,3,7,4,0,2,0,0.9611,0.9852,0.0,0,0,11.5555,10.3364,41.4132
+gemma4:e4b,90,0.6222,0.0385,0.4667,0.7778,11,3,4,1,5,3,0,0.7481,0.9815,0.0,0,0,5.4973,5.0534,131.7875
+rules,90,0.5667,0.0,0.4,0.7333,9,0,0,0,0,0,0,0.6472,1.0,0.0,0,0,0.0,0.0,

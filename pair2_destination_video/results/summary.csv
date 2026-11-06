@@ -1,0 +1,3 @@
+model,clips_attempted,clips_finished,seconds_mean,seconds_std,peak_gpu_gb_mean,peak_gpu_gb_std,peak_ram_gb_mean,peak_ram_gb_std,frames_mean,frames_std,prompt_match_mean,prompt_match_std,jitter_mean,jitter_std
+wan22,10,10,202.27,13.359,7.397,0.224,28.81,0.635,121.0,0.0,0.324,0.025,0.01,0.009
+wan21,10,10,437.55,4.845,6.732,0.136,27.97,1.42,81.0,0.0,0.316,0.024,0.012,0.015

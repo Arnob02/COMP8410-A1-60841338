@@ -1,0 +1,17 @@
+{
+  "experiment_name": "place2_reduced",
+  "method_name": "nerfacto",
+  "checkpoint": "/workspace/outputs/place2_reduced/nerfacto/run/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 25.746212005615234,
+    "psnr_std": 3.7070224285125732,
+    "ssim": 0.951298713684082,
+    "ssim_std": 0.014489675872027874,
+    "lpips": 0.06910153478384018,
+    "lpips_std": 0.018788708373904228,
+    "num_rays_per_sec": 289047.78125,
+    "num_rays_per_sec_std": 12138.00390625,
+    "fps": 0.5575767755508423,
+    "fps_std": 0.023414356634020805
+  }
+}

@@ -1,0 +1,5 @@
+scene,frames,test_views,nerfacto_raw,splatfacto_raw,nerfacto_matched,splatfacto_matched,raw_gap,matched_gap,splatfacto_wins_raw,splatfacto_wins_matched
+place1,full,20,27.47,35.03,33.4,35.65,7.56,2.25,20,17
+place1,reduced,20,26.89,34.9,32.64,35.34,8.01,2.7,20,18
+place2,full,21,26.28,35.75,33.8,36.22,9.47,2.43,21,17
+place2,reduced,21,25.74,35.22,33.17,35.77,9.48,2.59,21,18

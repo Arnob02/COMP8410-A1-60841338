@@ -1,0 +1,4 @@
+agent_a,agent_b,tasks_compared,mean_difference_a_minus_b,ci_low,ci_high,tasks_a_better,tasks_b_better,tasks_tied
+qwen3.5:9b,gemma4:e4b,30,0.1778,0.0333,0.3333,10,4,16
+qwen3.5:9b,rules,30,0.2333,-0.0,0.4667,12,6,12
+gemma4:e4b,rules,30,0.0556,-0.1111,0.2333,8,4,18

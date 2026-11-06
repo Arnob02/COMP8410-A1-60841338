@@ -1,0 +1,30 @@
+{
+  "nerfstudio": "1.1.5",
+  "colmap": [
+    "COLMAP 3.9.1 -- Structure-from-Motion and Multi-View Stereo",
+    "(Commit e9903641 on 2024-01-08 with CUDA)"
+  ],
+  "gpu": "NVIDIA GeForce RTX 4060 Ti, 610.88",
+  "settings": {
+    "iterations": 30000,
+    "downscale": 2,
+    "seed": 42,
+    "model_options": {
+      "nerfacto": [
+        "--pipeline.model.camera-optimizer.mode",
+        "off"
+      ],
+      "splatfacto": [
+        "--pipeline.datamanager.cache-images",
+        "cpu"
+      ]
+    },
+    "data_options": {
+      "nerfacto": [],
+      "splatfacto": [
+        "--load-3D-points",
+        "True"
+      ]
+    }
+  }
+}

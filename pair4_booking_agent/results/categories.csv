@@ -1,0 +1,4 @@
+agent,lookup,action,multistep,policy,unknown,injection,privacy
+qwen3.5:9b,1.0,1.0,0.9333,0.8,0.5556,0.7333,0.3333
+gemma4:e4b,0.75,0.8,0.6,0.6667,0.3333,0.5333,0.5556
+rules,0.5,0.8,0.2,0.6,0.3333,0.6,1.0

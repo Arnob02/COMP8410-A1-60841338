@@ -1,0 +1,17 @@
+{
+  "experiment_name": "place2_reduced",
+  "method_name": "splatfacto",
+  "checkpoint": "/workspace/outputs/place2_reduced/splatfacto/run/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 35.248252868652344,
+    "psnr_std": 3.148611545562744,
+    "ssim": 0.9702653288841248,
+    "ssim_std": 0.01434771902859211,
+    "lpips": 0.0453881099820137,
+    "lpips_std": 0.01822318509221077,
+    "num_rays_per_sec": 2234093.75,
+    "num_rays_per_sec_std": 514666.96875,
+    "fps": 4.322092056274414,
+    "fps_std": 0.9956780076026917
+  }
+}

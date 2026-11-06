@@ -1,0 +1,17 @@
+{
+  "experiment_name": "place2_full",
+  "method_name": "splatfacto",
+  "checkpoint": "/workspace/outputs/place2_full/splatfacto/run/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 35.77273941040039,
+    "psnr_std": 3.3025496006011963,
+    "ssim": 0.9727052450180054,
+    "ssim_std": 0.013281265273690224,
+    "lpips": 0.04560518264770508,
+    "lpips_std": 0.01877744309604168,
+    "num_rays_per_sec": 2317615.75,
+    "num_rays_per_sec_std": 519819.9375,
+    "fps": 4.483674049377441,
+    "fps_std": 1.0056469440460205
+  }
+}

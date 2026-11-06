@@ -1,0 +1,17 @@
+{
+  "experiment_name": "place2_full",
+  "method_name": "nerfacto",
+  "checkpoint": "/workspace/outputs/place2_full/nerfacto/run/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 26.282514572143555,
+    "psnr_std": 3.690092086791992,
+    "ssim": 0.9544674158096313,
+    "ssim_std": 0.013538861647248268,
+    "lpips": 0.06414183974266052,
+    "lpips_std": 0.018201755359768867,
+    "num_rays_per_sec": 286400.6875,
+    "num_rays_per_sec_std": 16339.087890625,
+    "fps": 0.5524704456329346,
+    "fps_std": 0.031518302857875824
+  }
+}

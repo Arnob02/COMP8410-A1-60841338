@@ -1,0 +1,413 @@
+{
+  "comfyui": {
+    "system": {
+      "os": "win32",
+      "ram_total": 33490927616,
+      "ram_free": 7535316992,
+      "comfyui_version": "0.44.0",
+      "required_frontend_version": "1.57.6",
+      "installed_templates_version": "0.11.101",
+      "required_templates_version": "0.11.101",
+      "comfy_package_versions": [
+        {
+          "name": "comfyui-frontend-package",
+          "installed": "1.57.6",
+          "required": "1.57.6"
+        },
+        {
+          "name": "comfyui-workflow-templates",
+          "installed": "0.11.101",
+          "required": "0.11.101"
+        },
+        {
+          "name": "comfyui-embedded-docs",
+          "installed": "0.5.16",
+          "required": "0.5.16"
+        },
+        {
+          "name": "comfy-aimdo",
+          "installed": "0.6.0",
+          "required": "0.6.0"
+        },
+        {
+          "name": "comfy-kitchen",
+          "installed": "0.2.40",
+          "required": "0.2.40"
+        }
+      ],
+      "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "pytorch_version": "2.14.1+cu130",
+      "embedded_python": true,
+      "deploy_environment": "local-portable",
+      "argv": [
+        "ComfyUI\\main.py",
+        "--windows-standalone-build"
+      ]
+    },
+    "devices": [
+      {
+        "name": "cuda:0 NVIDIA GeForce RTX 4060 Ti : cudaMallocAsync",
+        "type": "cuda",
+        "index": 0,
+        "vram_total": 8585216000,
+        "vram_free": 7012115254,
+        "torch_vram_total": 67108864,
+        "torch_vram_free": 56910646
+      }
+    ]
+  },
+  "workflows": {
+    "wan22": {
+      "3": {
+        "inputs": {
+          "seed": 63557051469109,
+          "steps": 20,
+          "cfg": 5,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1,
+          "model": [
+            "48",
+            0
+          ],
+          "positive": [
+            "6",
+            0
+          ],
+          "negative": [
+            "7",
+            0
+          ],
+          "latent_image": [
+            "55",
+            0
+          ]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+          "title": "KSampler",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "6": {
+        "inputs": {
+          "text": "A wide shot of a quiet harbour at sunset, small boats, gentle waves",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Positive Prompt)",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "7": {
+        "inputs": {
+          "text": "\u8272\u8c03\u8273\u4e3d\uff0c\u8fc7\u66dd\uff0c\u9759\u6001\uff0c\u7ec6\u8282\u6a21\u7cca\u4e0d\u6e05\uff0c\u5b57\u5e55\uff0c\u98ce\u683c\uff0c\u4f5c\u54c1\uff0c\u753b\u4f5c\uff0c\u753b\u9762\uff0c\u9759\u6b62\uff0c\u6574\u4f53\u53d1\u7070\uff0c\u6700\u5dee\u8d28\u91cf\uff0c\u4f4e\u8d28\u91cf\uff0cJPEG\u538b\u7f29\u6b8b\u7559\uff0c\u4e11\u964b\u7684\uff0c\u6b8b\u7f3a\u7684\uff0c\u591a\u4f59\u7684\u624b\u6307\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u624b\u90e8\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u8138\u90e8\uff0c\u7578\u5f62\u7684\uff0c\u6bc1\u5bb9\u7684\uff0c\u5f62\u6001\u7578\u5f62\u7684\u80a2\u4f53\uff0c\u624b\u6307\u878d\u5408\uff0c\u9759\u6b62\u4e0d\u52a8\u7684\u753b\u9762\uff0c\u6742\u4e71\u7684\u80cc\u666f\uff0c\u4e09\u6761\u817f\uff0c\u80cc\u666f\u4eba\u5f88\u591a\uff0c\u5012\u7740\u8d70",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Negative Prompt)",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "8": {
+        "inputs": {
+          "samples": [
+            "3",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+          "title": "VAE Decode",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "37": {
+        "inputs": {
+          "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+          "weight_dtype": "default"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "38": {
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        },
+        "class_type": "CLIPLoader",
+        "_meta": {
+          "title": "Load CLIP",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "39": {
+        "inputs": {
+          "vae_name": "wan2.2_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+          "title": "Load VAE",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "48": {
+        "inputs": {
+          "shift": 8,
+          "model": [
+            "37",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingSD3",
+        "_meta": {
+          "title": "ModelSamplingSD3",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "55": {
+        "inputs": {
+          "width": 832,
+          "height": 480,
+          "length": 121,
+          "batch_size": 1,
+          "vae": [
+            "39",
+            0
+          ]
+        },
+        "class_type": "Wan22ImageToVideoLatent",
+        "_meta": {
+          "title": "Wan22ImageToVideoLatent",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "57": {
+        "inputs": {
+          "fps": 24,
+          "bit_depth": "auto",
+          "color_space": "sRGB",
+          "chroma_subsampling": "auto",
+          "codec": "none",
+          "images": [
+            "8",
+            0
+          ]
+        },
+        "class_type": "CreateVideo",
+        "_meta": {
+          "title": "Create Video",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      },
+      "58": {
+        "inputs": {
+          "filename_prefix": "video/ComfyUI",
+          "format": "auto",
+          "format.codec": "auto",
+          "codec": "auto",
+          "video-preview": "",
+          "video": [
+            "57",
+            0
+          ]
+        },
+        "class_type": "SaveVideo",
+        "_meta": {
+          "title": "Save Video",
+          "cnr_id": "comfy-core",
+          "ver": "0.3.45"
+        }
+      }
+    },
+    "wan21": {
+      "3": {
+        "inputs": {
+          "seed": 414787965235043,
+          "steps": 30,
+          "cfg": 6,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1,
+          "model": [
+            "48",
+            0
+          ],
+          "positive": [
+            "6",
+            0
+          ],
+          "negative": [
+            "7",
+            0
+          ],
+          "latent_image": [
+            "40",
+            0
+          ]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+          "title": "KSampler"
+        }
+      },
+      "6": {
+        "inputs": {
+          "text": "A wide shot of a quiet harbour at sunset, small boats, gentle waves",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Positive Prompt)"
+        }
+      },
+      "7": {
+        "inputs": {
+          "text": "\u8272\u8c03\u8273\u4e3d\uff0c\u8fc7\u66dd\uff0c\u9759\u6001\uff0c\u7ec6\u8282\u6a21\u7cca\u4e0d\u6e05\uff0c\u5b57\u5e55\uff0c\u98ce\u683c\uff0c\u4f5c\u54c1\uff0c\u753b\u4f5c\uff0c\u753b\u9762\uff0c\u9759\u6b62\uff0c\u6574\u4f53\u53d1\u7070\uff0c\u6700\u5dee\u8d28\u91cf\uff0c\u4f4e\u8d28\u91cf\uff0cJPEG\u538b\u7f29\u6b8b\u7559\uff0c\u4e11\u964b\u7684\uff0c\u6b8b\u7f3a\u7684\uff0c\u591a\u4f59\u7684\u624b\u6307\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u624b\u90e8\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u8138\u90e8\uff0c\u7578\u5f62\u7684\uff0c\u6bc1\u5bb9\u7684\uff0c\u5f62\u6001\u7578\u5f62\u7684\u80a2\u4f53\uff0c\u624b\u6307\u878d\u5408\uff0c\u9759\u6b62\u4e0d\u52a8\u7684\u753b\u9762\uff0c\u6742\u4e71\u7684\u80cc\u666f\uff0c\u4e09\u6761\u817f\uff0c\u80cc\u666f\u4eba\u5f88\u591a\uff0c\u5012\u7740\u8d70",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIP Text Encode (Negative Prompt)"
+        }
+      },
+      "8": {
+        "inputs": {
+          "samples": [
+            "3",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+          "title": "VAE Decode"
+        }
+      },
+      "37": {
+        "inputs": {
+          "unet_name": "wan2.1_t2v_1.3B_fp16.safetensors",
+          "weight_dtype": "default"
+        },
+        "class_type": "UNETLoader",
+        "_meta": {
+          "title": "Load Diffusion Model"
+        }
+      },
+      "38": {
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        },
+        "class_type": "CLIPLoader",
+        "_meta": {
+          "title": "Load CLIP"
+        }
+      },
+      "39": {
+        "inputs": {
+          "vae_name": "wan_2.1_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+          "title": "Load VAE"
+        }
+      },
+      "40": {
+        "inputs": {
+          "width": 832,
+          "height": 480,
+          "length": 81,
+          "batch_size": 1
+        },
+        "class_type": "EmptyHunyuanLatentVideo",
+        "_meta": {
+          "title": "Empty Hunyuan Video 1.0 Latent"
+        }
+      },
+      "48": {
+        "inputs": {
+          "shift": 8,
+          "model": [
+            "37",
+            0
+          ]
+        },
+        "class_type": "ModelSamplingSD3",
+        "_meta": {
+          "title": "ModelSamplingSD3"
+        }
+      },
+      "49": {
+        "inputs": {
+          "fps": 16,
+          "bit_depth": "auto",
+          "color_space": "sRGB",
+          "chroma_subsampling": "auto",
+          "codec": "none",
+          "images": [
+            "8",
+            0
+          ]
+        },
+        "class_type": "CreateVideo",
+        "_meta": {
+          "title": "Create Video"
+        }
+      },
+      "50": {
+        "inputs": {
+          "filename_prefix": "video/ComfyUI",
+          "format": "auto",
+          "format.codec": "auto",
+          "codec": "auto",
+          "video-preview": "",
+          "video": [
+            "49",
+            0
+          ]
+        },
+        "class_type": "SaveVideo",
+        "_meta": {
+          "title": "Save Video"
+        }
+      }
+    }
+  }
+}
