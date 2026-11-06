@@ -1,0 +1,9 @@
+# Pair 1 packages. Install PyTorch first, as README.md explains, so it matches your GPU or CPU.
+numpy
+scipy
+pandas
+scikit-learn
+xgboost
+matplotlib
+# Lets VS Code or Jupyter run the notebook.
+ipykernel
