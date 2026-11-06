@@ -1,4 +1,4 @@
-# Pair 1 packages. Install PyTorch first, as README.md explains, so it matches your GPU or CPU.
+# Pair 1 packages: Install PyTorch first 
 numpy
 scipy
 pandas
