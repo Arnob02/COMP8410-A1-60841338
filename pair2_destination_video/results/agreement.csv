@@ -1,0 +1,5 @@
+score,correlation,mean_absolute_difference,exact_match_share
+realism,0.527,0.45,0.55
+prompt_match,0.677,0.3,0.7
+smooth_motion,0.78,0.25,0.75
+safe_to_publish,0.64,0.3,0.7
