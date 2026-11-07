@@ -1,0 +1,15 @@
+# Pair 2 packages. A CPU-only PyTorch is enough: the models themselves run inside ComfyUI.
+numpy
+pandas
+matplotlib
+pillow
+psutil
+torch
+# Reading video files.
+imageio
+imageio-ffmpeg
+av
+# CLIP prompt-match scores, used only when RUN_SCORING = True.
+transformers
+# Lets VS Code or Jupyter run the notebook.
+ipykernel
