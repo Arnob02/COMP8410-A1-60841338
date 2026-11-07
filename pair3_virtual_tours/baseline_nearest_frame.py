@@ -1,4 +1,4 @@
-# Scores the nearest training frame against each test view. Runs inside the container.
+
 import argparse, json
 from pathlib import Path
 
@@ -21,25 +21,25 @@ train, test = [by_name[n] for n in meta["train_filenames"]], [by_name[n] for n i
 
 def pose(frame):
     m = np.array(frame["transform_matrix"])
-    return m[:3, 3], -m[:3, 2]  # Camera position, and viewing direction (it looks along the negative third column).
+    return m[:3, 3], -m[:3, 2] 
 
 
 def image(frame):
-    path = args.scene / "images_2" / Path(frame["file_path"]).name  # Half size, like the models.
+    path = args.scene / "images_2" / Path(frame["file_path"]).name  
     return torch.from_numpy(np.asarray(Image.open(path).convert("RGB"), dtype=np.float32) / 255.0).permute(2, 0, 1)[None].to(device)
 
 
 positions = np.array([pose(f)[0] for f in train])
-scale = float(np.median(np.linalg.norm(np.diff(positions, axis=0), axis=1))) or 1.0  # Typical step between neighbouring frames.
+scale = float(np.median(np.linalg.norm(np.diff(positions, axis=0), axis=1))) or 1.0  
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-psnr = PeakSignalNoiseRatio(data_range=1.0).to(device)  # The same metric settings as Nerfstudio.
+psnr = PeakSignalNoiseRatio(data_range=1.0).to(device)  
 lpips = LearnedPerceptualImagePatchSimilarity(normalize=True).to(device)
 scores = {"psnr": [], "ssim": [], "lpips": []}
 with torch.no_grad():
     for frame in test:
         position, direction = pose(frame)
         best, best_score = None, float("inf")
-        for other in train:  # Closest position plus angle, with one typical step equal to 10 degrees.
+        for other in train:  
             p, d = pose(other)
             score = np.linalg.norm(position - p) / scale + np.degrees(np.arccos(np.clip(direction @ d, -1.0, 1.0))) / 10.0
             if score < best_score:

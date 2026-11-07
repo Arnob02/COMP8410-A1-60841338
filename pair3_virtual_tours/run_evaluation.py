@@ -5,26 +5,25 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PROCESSED = HERE / "processed"
-DOWNSCALE, SEED = 2, 42  # Half-size images keep both models within an 8 GB GPU.
+DOWNSCALE, SEED = 2, 42  
 MODEL_OPTIONS = {"nerfacto": ["--pipeline.model.camera-optimizer.mode", "off"],
-                 "splatfacto": ["--pipeline.datamanager.cache-images", "cpu"]}  # Keeps images in RAM, saving GPU memory.
-DATA_OPTIONS = {"nerfacto": [], "splatfacto": ["--load-3D-points", "True"]}  # Splatfacto starts from COLMAP's points.
+                 "splatfacto": ["--pipeline.datamanager.cache-images", "cpu"]}  
+DATA_OPTIONS = {"nerfacto": [], "splatfacto": ["--load-3D-points", "True"]}  
 COLUMNS = ["scene", "model", "frames", "status", "train_frames", "test_frames", "iterations", "psnr", "ssim", "lpips",
            "render_fps", "train_minutes", "peak_gpu_gb", "storage_mb"]
 
 
 def watch_gpu(peak, stop):
-    """Every 2 seconds, keep the highest GPU memory in use (MB)."""
     while not stop.wait(2):
         out = subprocess.run(["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"], capture_output=True, text=True).stdout
         try:
             peak[0] = max(peak[0] or 0, float(out.strip().splitlines()[0]))
         except (ValueError, IndexError):
-            pass  # A missed reading doesn't matter.
+            pass 
 
 
 def run_logged(command, log_path):
-    """Run a command, append its output to a log, and return True if it succeeded."""
+
     with log_path.open("a", encoding="utf-8") as log:
         log.write("\n$ " + " ".join(command) + "\n")
         log.flush()
@@ -32,7 +31,7 @@ def run_logged(command, log_path):
 
 
 def run_model(scene, model, frames, iterations, outputs, results):
-    """Train one model, test it, time its drawing, and return one row of results."""
+
     experiment, name = f"{scene.name}_{frames}", f"{scene.name}__{model}__{frames}"
     (results / "logs").mkdir(exist_ok=True)
     log = results / "logs" / f"{name}.log"
@@ -48,8 +47,8 @@ def run_model(scene, model, frames, iterations, outputs, results):
     started = time.perf_counter()
     trained = run_logged(["ns-train", model, "--data", str(data_file), "--output-dir", str(outputs), "--experiment-name", experiment,
                           "--timestamp", "run", "--max-num-iterations", str(iterations), "--machine.seed", str(SEED),
-                          "--vis", "tensorboard",  # No browser window, so the run finishes by itself.
-                          "--steps-per-eval-all-images", "1000000",  # Skips slow progress checks; ns-eval gives the scores.
+                          "--vis", "tensorboard",  
+                          "--steps-per-eval-all-images", "1000000",  
                           *MODEL_OPTIONS[model], "nerfstudio-data", "--downscale-factor", str(DOWNSCALE), *DATA_OPTIONS[model]], log)
     row["train_minutes"] = round((time.perf_counter() - started) / 60, 2)
     stop.set()
@@ -73,11 +72,11 @@ def run_model(scene, model, frames, iterations, outputs, results):
     speed = subprocess.run(["python", str(HERE / "measure_speed.py"), str(config)], capture_output=True, text=True)
     try:
         row["render_fps"] = json.loads(speed.stdout.strip().splitlines()[-1])["render_fps"]
-    except (ValueError, IndexError, KeyError):  # A failure here keeps the scores.
+    except (ValueError, IndexError, KeyError):  
         print(f"Couldn't measure drawing speed for {name}")
         with log.open("a", encoding="utf-8") as file:
             file.write(speed.stdout + speed.stderr)
-    if frames == "full":  # A walkthrough video for the presentation.
+    if frames == "full": 
         video = results / "videos" / f"{name}.mp4"
         video.parent.mkdir(exist_ok=True)
         run_logged(["ns-render", "interpolate", "--load-config", str(config), "--output-path", str(video), "--pose-source", "eval",
@@ -86,7 +85,7 @@ def run_model(scene, model, frames, iterations, outputs, results):
 
 
 def run_baseline(scene, frames, results):
-    """Score the nearest-frame baseline, which needs no training."""
+
     output = results / "evals" / f"{scene.name}__nearest-frame__{frames}.json"
     finished = subprocess.run(["python", str(HERE / "baseline_nearest_frame.py"), str(scene), frames, "--output", str(output)])
     meta = json.loads((scene / f"{frames}.json").read_text())
@@ -105,7 +104,7 @@ def save_table(rows, path):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--iterations", type=int, default=30000)  # Nerfstudio's standard length for both models.
+parser.add_argument("--iterations", type=int, default=30000) 
 parser.add_argument("--quick", action="store_true")
 args = parser.parse_args()
 scenes = sorted(p for p in PROCESSED.iterdir() if (p / "full.json").exists())
@@ -118,7 +117,7 @@ results, outputs = HERE / ("results_quick" if args.quick else "results"), HERE /
 results.mkdir(exist_ok=True)
 table = results / "metrics.csv"
 rows = [r for r in csv.DictReader(table.open(encoding="utf-8")) if r["status"] == "done"] if table.exists() else []
-finished = {(r["scene"], r["model"], r["frames"]) for r in rows}  # Finished runs are kept; failed runs are retried.
+finished = {(r["scene"], r["model"], r["frames"]) for r in rows}  
 for scene in scenes:
     for frames in levels:
         if (scene.name, "nearest-frame", frames) not in finished:
@@ -133,7 +132,7 @@ for scene in scenes:
             save_table(rows, table)
 
 try:
-    version = metadata.version("nerfstudio")  # The container has no pip, so ask Python for the version.
+    version = metadata.version("nerfstudio")  
 except metadata.PackageNotFoundError:
     version = None
 environment = {"nerfstudio": version, "colmap": subprocess.run(["colmap", "-h"], capture_output=True, text=True).stdout.splitlines()[:2],

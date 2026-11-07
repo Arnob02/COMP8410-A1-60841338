@@ -1,33 +1,31 @@
-# Turns each phone video into frames, camera positions and train/test lists. Runs inside the container.
+
 import json, shutil, struct, subprocess
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 VIDEOS, PROCESSED = HERE / "videos", HERE / "processed"
 FRAMES, TEST_EVERY, LONG_SIDE, MIN_SHARE = 150, 8, 1920, 0.8
-FIRST, RETRY, RECORD = "sequential", "exhaustive", "matching_used.txt"  # RECORD notes the method used and stops a second retry.
+FIRST, RETRY, RECORD = "sequential", "exhaustive", "matching_used.txt"  
 
 
 def resize(video):
-    """Copy the video with its long side at 1920 pixels, because COLMAP ran out of memory on 4K."""
     out = PROCESSED / "_resized" / f"{video.stem}.mp4"
     if not out.exists():
         out.parent.mkdir(parents=True, exist_ok=True)
-        size = f"scale='if(gt(iw,ih),{LONG_SIDE},-2)':'if(gt(iw,ih),-2,{LONG_SIDE})'"  # -2 keeps the shape.
+        size = f"scale='if(gt(iw,ih),{LONG_SIDE},-2)':'if(gt(iw,ih),-2,{LONG_SIDE})'"  
         partial = out.with_suffix(".partial.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-vf", size, "-crf", "18", "-preset", "veryfast", "-an", str(partial)], check=True)
-        partial.rename(out)  # Only a finished file gets the final name.
+        partial.rename(out)  
     return out
 
 
 def colmap(video, output, method):
-    """Extract frames and estimate camera positions. COLMAP's GPU mode needs a display, so it uses the CPU."""
     subprocess.run(["ns-process-data", "video", "--data", str(resize(video)), "--output-dir", str(output),
                     "--num-frames-target", str(FRAMES), "--matching-method", method, "--no-gpu"], check=True)
 
 
 def placed(model):
-    return struct.unpack("<Q", (model / "images.bin").read_bytes()[:8])[0]  # images.bin starts with the frame count.
+    return struct.unpack("<Q", (model / "images.bin").read_bytes()[:8])[0]  
 
 
 def frames_in(output):
@@ -36,18 +34,16 @@ def frames_in(output):
 
 
 def share(output):
-    return frames_in(output) / len(list((output / "images").glob("*")))  # Unplaced frames are missing from transforms.json.
+    return frames_in(output) / len(list((output / "images").glob("*")))  
 
 
 def use_largest_model(output):
-    """Rebuild the dataset from the COLMAP piece that placed the most frames, if it isn't already used."""
     sparse = output / "colmap" / "sparse"
     models = sorted(f for f in sparse.iterdir() if (f / "images.bin").exists()) if sparse.exists() else []
     model = max(models, key=placed, default=None)
     if model is None or placed(model) == frames_in(output):
         return
     print(f"{output.name}: using {model.name}, which placed {placed(model)} frames")
-    # Nerfstudio refines the lens settings of piece 0 only, so the chosen piece gets the same step.
     refine = subprocess.run(["colmap", "bundle_adjuster", "--input_path", str(model), "--output_path", str(model),
                              "--BundleAdjustment.refine_principal_point", "1"], capture_output=True, text=True)
     if refine.returncode != 0:
@@ -57,12 +53,11 @@ def use_largest_model(output):
 
 
 def prepare(video, output):
-    """Make one scene's dataset, skipping steps that are already done."""
     if (output / "transforms.json").exists():
         print(f"{video.stem}: COLMAP has already run")
     else:
         if output.exists():
-            shutil.rmtree(output)  # Left over from a run that stopped partway.
+            shutil.rmtree(output) 
         colmap(video, output, FIRST)
     use_largest_model(output)
     if share(output) < MIN_SHARE and not (output / RECORD).exists():
@@ -72,7 +67,7 @@ def prepare(video, output):
             shutil.rmtree(retry)
         colmap(video, retry, RETRY)
         use_largest_model(retry)
-        better = share(retry) > share(output)  # Keep whichever placed more frames.
+        better = share(retry) > share(output)  
         shutil.rmtree(output if better else retry)
         if better:
             retry.rename(output)
@@ -92,7 +87,7 @@ for video in videos:
     names = sorted(f["file_path"] for f in meta["frames"])
     test = names[::TEST_EVERY]
     train = [n for n in names if n not in test]
-    for name, frames in [("full", train), ("reduced", train[::2])]:  # Both test on the same held-out views.
+    for name, frames in [("full", train), ("reduced", train[::2])]: 
         (output / f"{name}.json").write_text(json.dumps({**meta, "train_filenames": frames, "val_filenames": test, "test_filenames": test}, indent=2))
     record = output / RECORD
     row = {"scene": video.stem, "frames_extracted": len(list((output / "images").glob("*"))), "frames_matched": len(names),
