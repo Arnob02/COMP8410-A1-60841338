@@ -1,0 +1,1 @@
+The unpacked YelpChi.mat (198 MB) was removed from the Git history because GitHub rejects files over 100 MB. The dataset is still included as pair1_fake_reviews/data/YelpChi.zip. Removing it changed the commit IDs but not their dates, messages or other files. commit-map.txt lists each original commit ID, as shown in Table 10.2 of the report, next to its new ID.
