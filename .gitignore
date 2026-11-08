@@ -1,26 +1,5 @@
-
-# Exclude final evaluation submission folder
-60841338_Evaluation/
-
-# Ignore Python virtual environments
-.venv/
-venv/
-env/
-
-# Ignore Python caches
-__pycache__/
-*.pyc
-.pytest_cache/
-
-# Ignore Jupyter checkpoints
-.ipynb_checkpoints/
-
-# Ignore local secrets
-.env
-
-# Large Pair 3 generated artifacts
-pair3_virtual_tours/outputs/
-pair3_virtual_tours/processed/
-pair3_virtual_tours/results/renders/
-pair3_virtual_tours/results/videos/
-pair3_virtual_tours/videos/
+60841338 Video.mp4
+**/.venv/
+**/outputs/
+**/__pycache__/
+**/.ipynb_checkpoints/
