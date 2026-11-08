@@ -1,0 +1,7 @@
+# Pair 3 packages for the notebook. Nerfstudio, COLMAP and PyTorch run inside the Docker image, not here.
+numpy
+pandas
+matplotlib
+pillow
+# Lets VS Code or Jupyter run the notebook.
+ipykernel
